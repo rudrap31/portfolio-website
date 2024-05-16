@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+*{
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: black
+}
+
+
+.nav_links{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#logo{
+    color: white;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+
+nav a{
+    font-weight: 500;
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+
+nav svg{
+    fill: white;
+}
+
+#sidebox_active{
+    display: none;
+}
+
+.open_sidebar_button, .close_sidebar_button{
+    display: none;
+}
+
+@media(max-width: 490px){
+    .nav_links{
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        position: fixed;
+        top: 0;
+        right: -100%;
+        z-index: 10;
+        width: 300px;
+
+        background-color: rgb(68, 103, 155);
+        box-shadow: -5px 0 5px rgba(0,0,0,0.25);
+        transition: 0.5s ease-in-out;
+    }
+
+    nav a{
+        box-sizing: border-box;
+        height: auto;
+        width: 100%;
+        padding: 20px 30px;
+        justify-content: flex-start;
+    }
+
+    .open_sidebar_button, .close_sidebar_button{
+        display: block;
+        padding: 20px;
+
+    }
+
+    #sidebox_active:checked ~ .nav_links{
+        right: 0;
+    }
+}
