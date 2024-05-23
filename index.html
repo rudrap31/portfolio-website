@@ -5,29 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@v0.164.1/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.164.1/examples/jsm/"
+          }
+        }
+      </script>
 </head>
 <body>
         <nav class="navbar">
-<h2 id="logo">Rudra</h2>
+            <h3 id="logo">rudra</h2>
             <input type="checkbox" id="sidebox_active">
             <label for="sidebox_active" class="open_sidebar_button"> 
                 <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
             </label>
 
-            
             <div class="nav_links">
                 <label for="sidebox_active" class="close_sidebar_button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                 </label>
                 
-                <a href="#">about</a>
-                <a href="#">projects</a>
-                <a href="#">contact</a>
-
-
+                <a href="#">about.</a>
+                <a href="#">projects.</a>
+                <a href="#">contact.</a>
             </div>
-
         </nav>
-    <script src="scripts.js"></script>
-</body>
+        <div id="container">
+
+            <div class="landing-info">
+                <h3 class="landing-text">hey, im</h2>
+                <h1 class="name">RUDRA PATEL</h1>
+                <span class="typing"></span>
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.js"></script>
+        </div>
+
+        <script type="module" src="/main.js"></script>
+    </body>
 </html>
