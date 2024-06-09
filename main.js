@@ -20,11 +20,10 @@ container.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
+const ambientLight = new THREE.AmbientLight(0xffffff, 7);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-scene.add(directionalLight);
+
 
 
 const loader = new GLTFLoader();
@@ -37,8 +36,8 @@ loader.load( 'space-3dmodel/scene.gltf', function ( gltf ) {
 	console.error( error );
 
 } );
-scene.rotation.y = -1.2;
-camera.position.z = 3;
+scene.rotation.y = -1.1;
+camera.position.z = 3.2;
 camera.position.y = 0.3;
 
 
@@ -47,7 +46,7 @@ camera.position.y = 0.3;
 function animate() {
 
 	requestAnimationFrame( animate );
-    scene.rotation.y += 0.0025
+    scene.rotation.y += 0.0025;
 	renderer.render( scene, camera );
 }
 
