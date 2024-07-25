@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="importmap">
         {
           "imports": {
@@ -15,6 +16,7 @@
       </script>
 </head>
 <body>
+    <div class="navv">
         <nav class="navbar">
             <h3 id="logo">rudra</h2>
             <input type="checkbox" id="sidebox_active">
@@ -32,15 +34,33 @@
                 <a href="#">contact.</a>
             </div>
         </nav>
-        <div id="container">
+    </div>
+        <div id="container"></div>
 
+            <div class="landing">
+                <div class="line-container">
+                    <div class="circle"></div>
+                    <div class="line"></div>
+                </div>
             <div class="landing-info">
                 <h3 class="landing-text">hey, im</h2>
-                <h1 class="name">RUDRA PATEL</h1>
+                <h1 class="name">RUDRA <span class="lastname">PATEL</span></h1>
                 <span class="typing"></span>
+                <div class="social-icons"> 
+                    <a href="https://www.instagram.com/yourprofile" >
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yourprofile" target="_blank" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/yourprofile" target="_blank" aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                </div>
             </div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.js"></script>
         </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.js"></script>
+        
 
         <script type="module" src="/main.js"></script>
     </body>

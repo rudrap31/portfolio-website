@@ -5,8 +5,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 var typed = new Typed(".typing",{
     strings : ["Software Engineer", "ubc student", "travel enthusiast"],
-    typeSpeed : 150,
-    backSpeed : 125,
+    typeSpeed : 100,
+    backSpeed : 75,
     loop : true,
 });  
 
@@ -46,7 +46,7 @@ camera.position.y = 0.3;
 function animate() {
 
 	requestAnimationFrame( animate );
-    scene.rotation.y += 0.0025;
+    scene.rotation.y += 0.0015;
 	renderer.render( scene, camera );
 }
 
