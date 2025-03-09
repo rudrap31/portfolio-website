@@ -1,19 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-:root{
+
+:root {
     --purple: rgb(86, 18, 149);
 }
 
-*{
+* {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
+    
 }
 
 /*Navbar*/
 
 
-nav{
+nav {
     height: 80px;
     display: flex;
     justify-content: flex-end;
@@ -21,10 +23,12 @@ nav{
     position: relative;
     padding-left: 5vw;
     padding-right: 5vw;
+    padding-top: 10px;
+    font-size: 20px;
 }
 
 
-.nav_links{
+.nav_links {
     height: 100%;
     width: 100%;
     display: flex;
@@ -33,14 +37,14 @@ nav{
     justify-content: flex-end;
 }
 
-#logo{
+#logo {
     color: white;
     margin-right: auto;
     padding: 0 20px;
 }
 
 
-nav a{
+nav a {
     font-weight: 500;
     height: 100%;
     padding: 0 20px;
@@ -50,21 +54,27 @@ nav a{
     color: rgb(255, 255, 255);
 }
 
-
-nav svg{
+.bob{
+    height: 500px;
+}
+nav svg {
     fill: white;
 }
 
-#sidebox_active{
+#sidebox_active {
     display: none;
 }
 
-.open_sidebar_button, .close_sidebar_button{
+.open_sidebar_button,
+.close_sidebar_button {
     display: none;
 }
 
-@media(max-width: 490px){
-    .nav_links{
+@media(max-width: 560px) {
+    nav {
+        font-size: 18px;
+    }
+    .nav_links {
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
@@ -76,11 +86,11 @@ nav svg{
         width: 300px;
 
         background-color: var(--purple);
-        box-shadow: -5px 0 5px rgba(0,0,0,0.25);
+        box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
         transition: 0.5s ease-in-out;
     }
 
-    nav a{
+    nav a {
         box-sizing: border-box;
         height: auto;
         width: 100%;
@@ -88,20 +98,21 @@ nav svg{
         justify-content: flex-start;
     }
 
-    .open_sidebar_button, .close_sidebar_button{
+    .open_sidebar_button,
+    .close_sidebar_button {
         display: block;
         padding: 20px;
 
     }
 
-    #sidebox_active:checked ~ .nav_links{
+    #sidebox_active:checked~.nav_links {
         right: 0;
     }
 }
 
 /*Landing*/
 
-#container{
+.container {
     top: 0;
     left: 0;
     position: absolute;
@@ -110,39 +121,39 @@ nav svg{
     z-index: -1;
 }
 
-.landing-info{
+.landing-info {
     position: relative;
     color: rgb(255, 255, 255);
-    
+
 }
 
-.landing{
+.landing {
     padding-top: 80px;
-    padding-left: 15vw;
+    padding-left: 12vw;
     display: flex;
 
 }
 
-.landing-text{
+.landing-text {
     padding-bottom: 5px;
     font-size: 24px;
 }
 
-.typing{
+.typing {
     font-size: 24px;
 }
 
-.name{
+.name {
     color: var(--purple);
     font-weight: 700;
     font-size: 64px;
 }
 
- .lastname{
+.lastname {
     color: white;
- }
+}
 
- .line-container {
+.line-container {
     position: relative;
     padding-right: 10px;
 }
@@ -167,53 +178,63 @@ nav svg{
     top: -5px;
 }
 
-.social-icons{
+.social-icons {
     display: flex;
     gap: 15px;
 }
 
-.social-icons a{
+.social-icons a {
     text-decoration: none;
     color: white;
     font-size: 24px;
 }
 
-@media(max-width: 768px){
-    .landing{
+@media(max-width: 768px) {
+    .landing {
         padding-top: 100px;
         padding-left: 13vw;
     }
-    .line{
+
+    .line {
         height: 200px;
     }
-    .landing-text, .typing {
+
+    .landing-text,
+    .typing {
         font-size: 16px;
     }
-    .name{
+
+    .name {
         font-size: 48px;
     }
-    nav{
+
+    nav {
         padding-left: 30px;
         padding-right: 30px;
     }
 }
 
-@media(max-width: 490px){
-    .landing{
+@media(max-width: 490px) {
+    .landing {
         padding-top: 90px;
         padding-left: 12vw;
         margin-left: 20px;
     }
-    .line{
+
+    .line {
         height: 160px;
     }
-    .landing-text, .typing {
+
+    .landing-text,
+    .typing {
         font-size: 14px;
     }
-    .name{
+
+    .name {
         font-size: 36px;
     }
-    nav{
+
+    nav {
         padding-left: 0px;
         padding-right: 0px;
     }
