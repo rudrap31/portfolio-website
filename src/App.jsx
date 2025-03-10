@@ -17,9 +17,6 @@ function App() {
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/contact" element={<Contact />} /> */}
             </Routes>
-            <div className="bob">
-                soks
-            </div>
         </Router>
     );
 }
