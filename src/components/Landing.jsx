@@ -3,7 +3,7 @@ import React from "react";
 import { TypeAnimation } from 'react-type-animation';
 import Socials from "./Socials";
 
-const Landing = () => {
+const Landing = ({ scrollProgress=scrollProgress }) => {
 
     const Typing = () => {
         return (
@@ -24,9 +24,12 @@ const Landing = () => {
           />
         );
       };
-    
+    const opacity = Math.max(0, 1- scrollProgress * 2);
     return (
-        <div className="landing">
+        <div className="landing" style={{
+            opacity: opacity,
+            pointerEvents: opacity > 0 ? "auto" : "none"
+        }}>
             <div className="line-container">
                 <div className="circle"></div>
                 <div className="line"></div>

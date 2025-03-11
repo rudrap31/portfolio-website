@@ -2,6 +2,10 @@ import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import Landing from "./Landing";
+import About from "./About";
+import Projects from "./Projects";
+import Contact from "./Contact";
 
 const Model = ({ scrollProgress }) => {
     const model = useLoader(GLTFLoader, "/space-3dmodel/scene.gltf");
@@ -20,13 +24,11 @@ const Model = ({ scrollProgress }) => {
             if (scrollProgress === 0) {
                 // model continiusly rotates when not scrolling
                 modelRef.current.rotation.y += 0.0025;
-                console.log(modelRef.current.rotation.y + " / " + normalizedRotation)
             } else {
                 // rotation stops at y = 2.9
                 let startingRotation = modelRef.current.rotation.y
                 let targetRotationY = Math.min(normalizedRotation + scrollProgress * (2.9 - normalizedRotation), 2.9);
                 modelRef.current.rotation.y += (targetRotationY - normalizedRotation) * 0.1;
-                console.log(modelRef.current.rotation.y + " / " + normalizedRotation)
             }
         }
     });
@@ -75,7 +77,7 @@ const Scene = () => {
 
         const handleWheel = (event) => {
             setScrollProgress((prev) =>
-                Math.min(Math.max(0, prev + event.deltaY * 0.00125), 1) // Limit between 0 and 1
+                Math.min(Math.max(0, prev + event.deltaY * 0.00125), 2) // Limit between 0 and 1
             );
         };
 
@@ -84,15 +86,19 @@ const Scene = () => {
     }, []);
 
     return (
-        <div className="container">
-            <Canvas camera={{ position: [-0.4, 0.3, 3.2], fov: 75 }}>
-                <CameraController scrollProgress={scrollProgress} />
-                <ambientLight intensity={7} />
-                <Model scrollProgress={scrollProgress} />
-                {/* <AxesHelper/> */}
-            </Canvas>
-        </div>
-    );
+        <>
+            <Landing scrollProgress={scrollProgress} />
+            <About scrollProgress={scrollProgress} />
+            <Projects scrollProgress={scrollProgress} />
+            <Contact scrollProgress={scrollProgress} />
+            <div className="container">
+                <Canvas camera={{ position: [-0.4, 0.3, 3.2], fov: 75 }}>
+                    <CameraController scrollProgress={scrollProgress} />
+                    <ambientLight intensity={7} />
+                    <Model scrollProgress={scrollProgress} />
+                </Canvas>
+            </div>
+        </>)
 };
 
 export default Scene;
