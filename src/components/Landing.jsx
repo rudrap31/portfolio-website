@@ -3,7 +3,7 @@ import React from "react";
 import { TypeAnimation } from 'react-type-animation';
 import Socials from "./Socials";
 
-const Landing = ({ scrollProgress=scrollProgress }) => {
+const Landing = ({ scrollProgress }) => {
 
     const Typing = () => {
         return (

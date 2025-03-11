@@ -236,3 +236,56 @@ nav svg {
         padding-right: 0px;
     }
 }
+
+/* About */
+
+.about {
+    position: absolute;
+    top: 50%; /* Slightly towards the top */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 80%; /* Default width */
+    max-width: 800px; /* Prevents it from getting too large */
+    
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+}
+
+
+.top-about {
+    display: flex;
+}
+.top-about p{
+    justify-content: center;
+}
+
+.about img {
+    width: 300px;
+    height: 300px;
+}
+
+
+/* Responsive width changes */
+@media (max-width: 1024px) {
+    .about {
+        width: 80%;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 800px) {
+    .about {
+        width: 90%;
+        font-size: 14px;
+    }
+    .about img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+
+
