@@ -3,28 +3,28 @@ import React from "react";
 import { TypeAnimation } from 'react-type-animation';
 import Socials from "./Socials";
 
-const Landing = ({ scrollProgress }) => {
+const Typing = () => {
+    return (
+      <TypeAnimation
+        sequence={[
+          'software engineer', 
+          1000, // Waits 1s
+          'ubc student', 
+          1000, // Waits 1s
+          'travel enthusiast',
+          1000
+          ]}
+        speed={10}
+        wrapper="span"
+        cursor={true}
+        repeat={Infinity}
+        className = "typing"
+      />
+    );
+  };
 
-    const Typing = () => {
-        return (
-          <TypeAnimation
-            sequence={[
-              'software engineer', 
-              1000, // Waits 1s
-              'ubc student', 
-              1000, // Waits 1s
-              'travel enthusiast',
-              1000
-              ]}
-            speed={10}
-            wrapper="span"
-            cursor={true}
-            repeat={Infinity}
-            className = "typing"
-          />
-        );
-      };
-    const opacity = Math.max(0, 1- scrollProgress * 2);
+const Landing = ({ scrollProgress }) => {
+    const opacity = Math.max(0, Math.min(1, 1 - ((scrollProgress - 0.6) * (1/0.15))));
     return (
         <div className="landing" style={{
             opacity: opacity,
