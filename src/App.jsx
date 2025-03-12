@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Scene from "./components/Scene";
 import { useState, useEffect } from "react";
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
 
     return (
         <Router>
+            <Analytics />
             <Navbar scrollProgress={scrollProgress} setScrollProgress={setScrollProgress}/>
             <Scene scrollProgress={scrollProgress}/>
             {/* <Routes>

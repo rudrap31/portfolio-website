@@ -47,7 +47,7 @@ const About = ({ scrollProgress=scrollProgress }) => {
                     </div>
                     
                     <div className="about-image">
-                        <img src="imgs/F90FA541-731C-4CA9-82A2-EBB35FEC7B09_4_5005_c.jpeg" alt="Profile" />
+                        <img src="imgs/my_photo.jpg" alt="Profile" />
                     </div>
                 </div>
             </div>
