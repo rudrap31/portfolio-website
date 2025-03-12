@@ -17,11 +17,11 @@ const projectData = [
     link: "https://github.com/rudrap31/chat-app"
   },
   {
-    title: "Project 3",
-    description: "Description of project 3",
-    image: "/project3.jpg",
-    technologies: ["Vue.js", "Firebase"],
-    link: "https://github.com/yourusername/project3"
+    title: "This Website!",
+    description: "This project is a 3D React-based portfolio website featuring smooth-scrolling navigation that allows users to transition seamlessly between sections while animating the 3D model. The project also includes a fully responsive design, an interactive sidebar menu for mobile users, and EmailJS integration for handling contact form submissions.",
+    image: "imgs/portfolio-website-screenshot.png",
+    technologies: ["React", "Three.js", "EmailJS"],
+    link: "https://github.com/rudrap31/portfolio-website"
   }
 ];
 
