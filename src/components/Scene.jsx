@@ -68,22 +68,8 @@ const CameraController = ({ scrollProgress }) => {
 //     return <primitive object={new THREE.AxesHelper(5)} ref={helperRef} />;
 // };
 
-const Scene = () => {
-    const [scrollProgress, setScrollProgress] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        document.body.style.overflow = "hidden"; // Disable page scrolling
-
-        const handleWheel = (event) => {
-            setScrollProgress((prev) =>
-                Math.min(Math.max(0, prev + event.deltaY * 0.00125), 2) // Limit between 0 and 1
-            );
-        };
-
-        window.addEventListener("wheel", handleWheel);
-        return () => window.removeEventListener("wheel", handleWheel);
-    }, []);
+const Scene = ({ scrollProgress }) => {
+    
 
     return (
         <>
