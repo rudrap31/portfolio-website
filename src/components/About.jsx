@@ -39,7 +39,7 @@ const About = ({ scrollProgress=scrollProgress }) => {
                         <div className="skills-section">
                             <h3>Technical Skills</h3>
                             <div className="skills-container">
-                                {["JavaScript", "Python", "Java", "Racket", "HTML", "CSS"].map((skill, index) => (
+                                {["JavaScript", "Python", "Java", "Racket", "HTML", "CSS", "C++"].map((skill, index) => (
                                     <span key={index} className="skill-tag">{skill}</span>
                                 ))}
                             </div>
