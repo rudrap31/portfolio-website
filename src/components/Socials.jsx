@@ -6,13 +6,13 @@ import { FaInstagram } from "react-icons/fa";
 const Socials = () => {
     return (
         <div className="social-icons">
-            <a href="https://www.instagram.com/yourprofile">
+            <a href="https://www.instagram.com/rudrap_0631">
                 <FaInstagram />
             </a>
-            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/rudrap31" target="_blank" aria-label="LinkedIn">
                 <FaLinkedin />
             </a>
-            <a href="https://github.com/yourprofile" target="_blank" aria-label="GitHub">
+            <a href="https://github.com/rudrap31" target="_blank" aria-label="GitHub">
                 <FaGithub />
             </a>
         </div>
