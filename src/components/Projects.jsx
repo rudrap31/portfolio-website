@@ -3,6 +3,13 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const projectData = [
   {
+    title: "SimplySkin",
+    description: "SimplySkin is a mobile skincare AI app that helps users better understand their skin and routines. It provides AI-powered skin analysis through face scans, provides insights and reccomendations based on personal skin type and concerns, and gives product ratings via barcode scanning. Built with React Native, Expo, and Supabase, the app uses OpenAI’s API for personalized insights. SimplySkin is now live on the App Store with a growing real user base.",
+    image: "imgs/SimplySkinScreenshot.png",
+    technologies: ["React Native", "Expo", "Supabase", "Node.js"],
+    link: "https://apps.apple.com/ca/app/simplyskin-ai-skincare/id6751350480"
+  },
+  {
     title: "Sentiment Based Trading Bot",
     description: "This bot automates trading decisions by analyzing financial news headlines. Using a combination of web scraping, sentiment analysis, and real-time data APIs, it determines whether to buy or short stocks. The backend is built with Flask, while the React-based frontend visualizes portfolio performance and trade history. Automation is handled via GitHub Actions to ensure continuous updates",
     image: "imgs/portfolio-screenshot.png",

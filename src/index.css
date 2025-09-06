@@ -515,15 +515,23 @@ nav svg {
 
 .project-image {
     width: 100%;
-    height: 250px;
     border-radius: 8px;
     margin-bottom: 1rem;
+    overflow: hidden;
+    aspect-ratio: 16/10;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .project-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.project-image img:hover {
+    transform: scale(1.02);
 }
 
 .project-info {
@@ -546,6 +554,7 @@ nav svg {
 .project-info p {
     color: #ccc;
     margin-bottom: 1rem;
+    line-height: 1.5;
 }
 
 .technologies {
@@ -589,10 +598,11 @@ nav svg {
     justify-content: center;
     cursor: pointer;
     transition: color 0.3s ease;
+    flex-shrink: 0;
 }
 
 .carousel-button:hover {
-    color: #6f1cc1;
+    color: var(--purple);
 }
 
 .carousel-button svg {
@@ -611,7 +621,8 @@ nav svg {
 
     .project-image {
         flex: 1;
-        height: 400px;
+        aspect-ratio: 4/3;
+        max-height: 400px;
     }
 
     .project-info {
@@ -642,7 +653,8 @@ nav svg {
     }
 
     .project-image {
-        height: 200px;
+        aspect-ratio: 16/9;
+        max-height: 250px;
     }
 
     .carousel-button {
@@ -653,6 +665,21 @@ nav svg {
     .carousel-button svg {
         width: 16px;
         height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-image {
+        aspect-ratio: 3/2;
+        max-height: 200px;
+    }
+    
+    .project-info a {
+        font-size: 1.3rem;
+    }
+    
+    .project-info p {
+        font-size: 0.9rem;
     }
 }
 

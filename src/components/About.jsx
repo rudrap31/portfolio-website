@@ -17,24 +17,23 @@ const About = ({ scrollProgress=scrollProgress }) => {
                 <div className="about-grid">
                     <div className="about-text">
                         <div className="about-section">
-                            <p>
-                                Hello! I'm a first-year student at the University of British Columbia, where I am currently pursuing a Bachelor of Science.  
-                                Originally from Alberta, I have always played sports such as basketball, volleyball, and badminton.
-                            </p>
-                            <p>
-                                A fun fact about me— I once got the opportunity to travel to Hawaii for a volleyball 
-                                tournament, which was an unforgettable experience! I also have done competitive robotics, getting provincial placements and also
-                                the opportunity to travel to Dallas, TX for the Robotics World Championship.
-                            </p>
+                        <p>
+                            Hello! I'm a second-year Computer Science student at the University of British Columbia, pursuing a Bachelor of Science.  
+                            I grew up in Alberta, where I enjoyed playing sports like basketball, volleyball, and badminton.  
+                        </p>
+                        <p>
+                            A fun fact about me, I once had the chance to travel to Hawaii for a volleyball tournament, which was an unforgettable experience!  
+                            I’ve also competed in robotics at a provincial level and had the opportunity to represent my team at the Robotics World Championship in Dallas, TX.  
+                        </p>
                         </div>
 
                         <div className="about-section">
                             <p>
-                                I'm also deeply interested in technology and problem-solving. Coding has become 
-                                one of my favorite ways to challenge myself, and I enjoy building creative solutions 
-                                to complex problems. I'm always looking to learn new things and improve my skills.
+                                Beyond sports and robotics, I’m passionate about technology and problem-solving. Coding has become one of my favorite ways to challenge myself, and I love building creative solutions to real-world problems.  
+                                I’m always eager to keep learning, improving my skills, and collaborating with others on exciting projects.  
                             </p>
                         </div>
+
 
                         <div className="skills-section">
                             <h3>Technical Skills</h3>
