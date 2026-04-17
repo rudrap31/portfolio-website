@@ -1,4 +1,4 @@
-const Navbar = ({ scrollProgress, setScrollProgress }) => {
+const Navbar = ({ scrollProgress, setScrollProgress, loaded }) => {
     const handleAbout = (targetValue) => {
         const duration = 800;  // milliseconds
         const startValue = scrollProgress;
@@ -25,7 +25,10 @@ const Navbar = ({ scrollProgress, setScrollProgress }) => {
     };
 
     return (
-        <nav className="navbar">
+        <nav className="navbar" style={{
+            opacity: loaded ? 1 : 0,
+            transition: 'opacity 1.2s ease',
+        }}>
             <a href="#" className="logo" onClick={() => handleAbout(0)}>rudra</a>
             <input type="checkbox" id="sidebox_active"></input>
             <label htmlFor="sidebox_active" className="open_sidebar_button">
@@ -43,7 +46,7 @@ const Navbar = ({ scrollProgress, setScrollProgress }) => {
 
                 {/* Works both ways: Increases or decreases scrollProgress smoothly */}
                 <a href="#" onClick={() => handleAbout(0.9)}>about.</a>
-                <a href="#" onClick={() => handleAbout(1.8)}>projects.</a>
+                <a href="#" onClick={() => handleAbout(1.8)}>experience.</a>
                 <a href="#" onClick={() => handleAbout(2.4)}>contact.</a>
             </div>
         </nav>

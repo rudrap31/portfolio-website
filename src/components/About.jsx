@@ -18,27 +18,18 @@ const About = ({ scrollProgress=scrollProgress }) => {
                     <div className="about-text">
                         <div className="about-section">
                         <p>
-                            Hello! I'm a second-year Computer Science student at the University of British Columbia, pursuing a Bachelor of Science.  
-                            I grew up in Alberta, where I enjoyed playing sports like basketball, volleyball, and badminton.  
+                            I’m a second-year Computer Science student at UBC, currently interning at yAI, a financial due diligence AI startup, where I’ve shipped full-stack features across the entire product.
                         </p>
                         <p>
-                            A fun fact about me, I once had the chance to travel to Hawaii for a volleyball tournament, which was an unforgettable experience!  
-                            I’ve also competed in robotics at a provincial level and had the opportunity to represent my team at the Robotics World Championship in Dallas, TX.  
+                            I grew up in Alberta playing basketball, volleyball, and badminton. I once traveled to Hawaii for a volleyball tournament, and led a robotics team to the World Championship in Dallas, TX. These days I channel that same competitive drive into building software that actually gets used.
                         </p>
-                        </div>
-
-                        <div className="about-section">
-                            <p>
-                                Beyond sports and robotics, I’m passionate about technology and problem-solving. Coding has become one of my favorite ways to challenge myself, and I love building creative solutions to real-world problems.  
-                                I’m always eager to keep learning, improving my skills, and collaborating with others on exciting projects.  
-                            </p>
                         </div>
 
 
                         <div className="skills-section">
                             <h3>Technical Skills</h3>
                             <div className="skills-container">
-                                {["JavaScript", "Python", "Java", "Racket", "HTML", "CSS", "C++"].map((skill, index) => (
+                                {["TypeScript", "JavaScript", "Python", "Java", "C++", "React", "React Native", "Node.js", "FastAPI", "Flask", "PostgreSQL", "Supabase", "AWS", "Azure"].map((skill, index) => (
                                     <span key={index} className="skill-tag">{skill}</span>
                                 ))}
                             </div>

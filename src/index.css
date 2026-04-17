@@ -11,6 +11,43 @@
     padding: 0;
 }
 
+body {
+    background-color: #000;
+}
+
+.loading-spinner {
+    position: fixed;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    border: 2.5px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    z-index: 1000;
+}
+
+@keyframes spin {
+    to { transform: translateX(-50%) rotate(360deg); }
+}
+
+.scroll-indicator {
+    position: fixed;
+    bottom: 44px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    opacity: 0;
+    animation: scrollFadeIn 1s ease 0.5s forwards;
+}
+
+@keyframes scrollFadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+    to   { opacity: 0.55; transform: translateX(-50%) translateY(0); }
+}
+
 /*Navbar*/
 
 
@@ -20,6 +57,7 @@ nav {
     justify-content: flex-end;
     align-items: center;
     position: relative;
+    z-index: 100;
     padding-left: 5vw;
     padding-right: 5vw;
     padding-top: 10px;
@@ -475,211 +513,266 @@ nav svg {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
     color: white;
 }
 
-.projects-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+.exp-projects-container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.section-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-label {
+    font-size: 2rem;
+    font-weight: 700;
     color: var(--purple);
+    margin-bottom: 1.25rem;
 }
 
-.carousel-container {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
+.experience-card {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
 }
 
-.carousel {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
+.exp-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
-.carousel-track {
+.exp-details {
+    flex: 1;
+}
+
+.exp-header {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.2rem;
 }
 
-.project-card {
-    min-width: 100%;
-    padding: 1rem;
-    box-sizing: border-box;
+.exp-header h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
 }
 
-.project-image {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    aspect-ratio: 16/10;
-    background: rgba(255, 255, 255, 0.1);
+.exp-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
 }
 
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    transition: transform 0.3s ease;
+.exp-company {
+    display: block;
+    font-size: 0.92rem;
+    color: var(--purple);
+    margin-bottom: 0.65rem;
 }
 
-.project-image img:hover {
-    transform: scale(1.02);
+.exp-company-inline {
+    color: var(--purple);
+    font-weight: 600;
 }
 
-.project-info {
-    text-align: center;
-}
-
-.project-info a {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: white;
+.exp-company-link {
     text-decoration: none;
+    color: inherit;
 }
 
-.project-info a:hover {
-    color: rgb(184, 181, 181);
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.project-info p {
-    color: #ccc;
-    margin-bottom: 1rem;
-    line-height: 1.5;
+.exp-details p {
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+    margin-bottom: 0.9rem;
 }
 
 .technologies {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    justify-content: center;
-    margin-bottom: 1rem;
 }
 
 .tech-tag {
     background-color: var(--purple);
     color: white;
-    padding: 0.25rem 0.75rem;
+    padding: 0.15rem 0.55rem;
     border-radius: 15px;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
 }
 
-.project-link {
-    display: inline-block;
-    padding: 0.5rem 1.5rem;
-    background-color: var(--purple);
-    color: white;
+.projects-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple) transparent;
+}
+
+.projects-grid::-webkit-scrollbar {
+    height: 4px;
+}
+
+.projects-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.projects-grid::-webkit-scrollbar-thumb {
+    background: var(--purple);
+    border-radius: 2px;
+}
+
+.project-mini-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
     text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.project-link:hover {
-    background-color: #6f1cc1;
-}
-
-.carousel-button {
-    background-color: transparent;
     color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 340px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.project-mini-card:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.project-image-wrapper {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    padding: 0 16px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: color 0.3s ease;
+}
+
+.project-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+.project-image-placeholder {
+    width: 100%;
+    height: 160px;
+    background: rgba(86, 18, 149, 0.15);
+}
+
+.project-image-logo-wrapper {
+    width: 100%;
+    height: 200px;
+    background: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-card-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.project-card-body {
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+}
+
+.project-mini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-mini-header h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.project-mini-header svg {
+    color: rgba(255, 255, 255, 0.35);
     flex-shrink: 0;
 }
 
-.carousel-button:hover {
-    color: var(--purple);
-}
-
-.carousel-button svg {
-    width: 20px;
-    height: 20px;
-}
-
-/* Responsive Design */
-@media (min-width: 768px) {
-    .project-card {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        padding: 2rem;
-    }
-
-    .project-image {
-        flex: 1;
-        aspect-ratio: 4/3;
-        max-height: 400px;
-    }
-
-    .project-info {
-        flex: 1;
-        text-align: left;
-    }
-
-    .technologies {
-        justify-content: flex-start;
-    }
+.project-mini-card p {
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.55;
+    flex: 1;
 }
 
 @media (max-width: 768px) {
     .projects-section {
-        padding: 1rem;
+        padding: 2rem 1rem;
     }
 
-    .projects-section h2 {
-        font-size: 2rem;
+    .exp-header {
+        flex-direction: column;
+        gap: 0.2rem;
     }
 
-    .carousel-container {
-        gap: 0.5rem;
+    .section-label {
+        font-size: 1.6rem;
     }
 
-    .project-card {
-        padding: 0.5rem;
+    .experience-card {
+        padding: 1.1rem 1.25rem;
+        gap: 1rem;
     }
 
-    .project-image {
-        aspect-ratio: 16/9;
-        max-height: 250px;
+    .exp-logo {
+        width: 48px;
+        height: 48px;
     }
 
-    .carousel-button {
-        width: 32px;
-        height: 32px;
+    .exp-header h3 {
+        font-size: 0.95rem;
     }
 
-    .carousel-button svg {
-        width: 16px;
-        height: 16px;
+    .exp-details p {
+        font-size: 0.82rem;
+    }
+
+    .exp-company-inline,
+    .exp-date {
+        font-size: 0.78rem;
     }
 }
 
 @media (max-width: 480px) {
-    .project-image {
-        aspect-ratio: 3/2;
-        max-height: 200px;
+    .experience-card {
+        flex-direction: column;
     }
-    
-    .project-info a {
-        font-size: 1.3rem;
-    }
-    
-    .project-info p {
-        font-size: 0.9rem;
+
+    .section-label {
+        font-size: 1.4rem;
     }
 }
 
