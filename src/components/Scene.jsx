@@ -111,7 +111,7 @@ const Scene = ({ scrollProgress, loaded, setLoaded }) => {
                 <div style={{
                     position: 'absolute',
                     inset: 0,
-                    backgroundImage: 'url(imgs/loading.png)',
+                    backgroundImage: 'url(imgs/portfolio-website-screenshot2.png)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     filter: 'blur(28px)',
