@@ -20,12 +20,8 @@ const Model = ({ scrollProgress, onLoad }) => {
     }, [model]);
 
     useEffect(() => {
-        const onMouseDown = (e) => {
-            dragRef.current.isDragging = true;
-            dragRef.current.lastX = e.clientX;
-        };
         const onMouseMove = (e) => {
-            if (!dragRef.current.isDragging || !modelRef.current) return;
+            if (!modelRef.current) return;
             const delta = e.clientX - dragRef.current.lastX;
             const rotation = delta * 0.0025;
             modelRef.current.rotation.y += rotation;
@@ -34,11 +30,21 @@ const Model = ({ scrollProgress, onLoad }) => {
         };
         const onMouseUp = () => {
             dragRef.current.isDragging = false;
+            document.body.style.cursor = '';
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+        };
+        const onMouseDown = (e) => {
+            const tag = e.target.tagName.toLowerCase();
+            if (tag === 'a' || tag === 'button' || tag === 'input' || tag === 'textarea' || tag === 'label' || e.target.closest('nav, .about, .projects-section, .contact')) return;
+            dragRef.current.isDragging = true;
+            dragRef.current.lastX = e.clientX;
+            document.body.style.cursor = 'grabbing';
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
         };
 
         window.addEventListener('mousedown', onMouseDown);
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('mouseup', onMouseUp);
         return () => {
             window.removeEventListener('mousedown', onMouseDown);
             window.removeEventListener('mousemove', onMouseMove);
@@ -51,7 +57,7 @@ const Model = ({ scrollProgress, onLoad }) => {
 
         let normalizedRotation = ((modelRef.current.rotation.y + Math.PI) % (2 * Math.PI)) - Math.PI;
 
-        if (scrollProgress === 0) {
+        if (scrollProgress < 0.01) {
             // auto-rotate + momentum decay
             modelRef.current.rotation.y += 0.0025 + dragRef.current.velocity;
         } else {
@@ -121,7 +127,7 @@ const Scene = ({ scrollProgress, loaded, setLoaded }) => {
                     pointerEvents: 'none',
                     zIndex: 1,
                 }} />
-                <Canvas camera={{ position: [-0.4, 0.3, 3.2], fov: 75 }}>
+                <Canvas camera={{ position: [-0.4, 0.3, 3.2], fov: 75 }} style={{ pointerEvents: 'none' }} events={(store) => ({ ...store.getState().events, enabled: false })}>
                     <CameraController scrollProgress={scrollProgress} />
                     <ambientLight intensity={7} />
                     <Model scrollProgress={scrollProgress} onLoad={() => setLoaded(true)} />
