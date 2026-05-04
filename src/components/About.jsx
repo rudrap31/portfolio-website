@@ -1,5 +1,3 @@
-import React from 'react'
-
 const About = ({ scrollProgress=scrollProgress }) => {
     const opacity = Math.min(1, Math.max(0, (scrollProgress - 0.75) * (1/0.15))) * 
                    Math.min(1, Math.max(0, (1.5 - scrollProgress) * (1/0.15)));
@@ -18,10 +16,10 @@ const About = ({ scrollProgress=scrollProgress }) => {
                     <div className="about-text">
                         <div className="about-section">
                         <p>
-                            I’m a second-year Computer Science student at UBC, currently interning at yAI, a financial due diligence AI startup, where I’ve shipped full-stack features across the entire product.
+                            I’m a Computer Science student at UBC, previously interned at yAI, a financial due diligence AI startup, where I shipped full-stack features across the entire product.
                         </p>
                         <p>
-                            I grew up in Alberta playing basketball, volleyball, and badminton. I once traveled to Hawaii for a volleyball tournament, and led a robotics team to the World Championship in Dallas, TX. These days I channel that same competitive drive into building software that actually gets used.
+                            I love building software that people actually use. From a skincare app live on the App Store to automated trading bots, I’m always working on something.
                         </p>
                         </div>
 

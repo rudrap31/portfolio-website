@@ -1,3 +1,4 @@
+import { useRef, useCallback } from 'react';
 import { FiExternalLink } from 'react-icons/fi';
 
 const projectData = [
@@ -25,11 +26,41 @@ const projectData = [
 ];
 
 const Projects = ({ scrollProgress }) => {
+  const containerRef = useRef(null);
   const opacity = Math.min(1, Math.max(0, (scrollProgress - 1.5) * (1/0.15))) *
                  Math.min(1, Math.max(0, (2.25 - scrollProgress) * (1/0.15)));
 
+  const touchStartRef = useRef(0);
+
+  // Stop wheel/touch events from bubbling when this section can scroll internally
+  const canTrapScroll = useCallback((scrollingDown) => {
+    const el = containerRef.current;
+    if (!el) return false;
+    const canScrollDown = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
+    const canScrollUp = el.scrollTop > 1;
+    return (scrollingDown && canScrollDown) || (!scrollingDown && canScrollUp);
+  }, []);
+
+  const handleWheel = useCallback((e) => {
+    if (canTrapScroll(e.deltaY > 0)) {
+      e.stopPropagation();
+    }
+  }, [canTrapScroll]);
+
+  const handleTouchStart = useCallback((e) => {
+    touchStartRef.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchMove = useCallback((e) => {
+    const deltaY = touchStartRef.current - e.touches[0].clientY;
+    touchStartRef.current = e.touches[0].clientY;
+    if (canTrapScroll(deltaY > 0)) {
+      e.stopPropagation();
+    }
+  }, [canTrapScroll]);
+
   return (
-    <div className="projects-section" style={{
+    <div className="projects-section" ref={containerRef} onWheel={handleWheel} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} style={{
       opacity: opacity,
       pointerEvents: opacity > 0 ? "auto" : "none"
     }}>
@@ -55,7 +86,7 @@ const Projects = ({ scrollProgress }) => {
               </div>
             </div>
           </div>
-          <div className="experience-card" style={{ marginTop: '1rem' }}>
+          <div className="experience-card">
             <img src="imgs/motion_logo.png" className="exp-logo" alt="Motion UBC" />
             <div className="exp-details">
               <div className="exp-header">
