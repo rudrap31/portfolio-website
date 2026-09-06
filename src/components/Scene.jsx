@@ -1,4 +1,4 @@
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
@@ -52,14 +52,15 @@ const Model = ({ scrollProgress, onLoad }) => {
         };
     }, []);
 
-    useFrame(() => {
+    useFrame((_, delta) => {
         if (!modelRef.current || dragRef.current.isDragging) return;
 
+        const dt = Math.min(delta, 0.1);
         let normalizedRotation = ((modelRef.current.rotation.y + Math.PI) % (2 * Math.PI)) - Math.PI;
 
         if (scrollProgress < 0.01) {
-            // auto-rotate + momentum decay
-            modelRef.current.rotation.y += 0.0025 + dragRef.current.velocity;
+            // auto-rotate + momentum decay (0.15 rad/s ≈ 0.0025/frame at 60fps)
+            modelRef.current.rotation.y += 0.25 * dt + dragRef.current.velocity;
         } else {
             // momentum + lerp to target
             modelRef.current.rotation.y += dragRef.current.velocity;
@@ -67,25 +68,17 @@ const Model = ({ scrollProgress, onLoad }) => {
             modelRef.current.rotation.y += (targetRotationY - normalizedRotation) * 0.1;
         }
 
-        dragRef.current.velocity *= 0.92; // friction — lower = stops faster
+        dragRef.current.velocity *= Math.pow(0.006, dt); // time-corrected friction
     });
 
     return <primitive object={model.scene} ref={modelRef} />;
 };
 
 const CameraController = ({ scrollProgress }) => {
-    const { camera } = useThree();
-
-    useFrame(() => {
-        // Target camera position: [-0.4, 0.7, -0.8]
-        // newPosition = startPosition * (1 - scrollValue) + endPosition * scrollValue;
-
-       let targetY = 0.3 * (1 - scrollProgress) + 0.7 * scrollProgress; 
+    useFrame(({ camera }) => {
+       let targetY = 0.3 * (1 - scrollProgress) + 0.7 * scrollProgress;
        let targetZ = 3.2 * (1 - scrollProgress) + -0.8 * scrollProgress;
-
-        // moves the camera towards the target position
         camera.position.set(-0.4, targetY, targetZ)
-        // tils slightly up
         camera.rotation.x = 0 + scrollProgress * 0.1;
     });
 
@@ -105,13 +98,13 @@ const CameraController = ({ scrollProgress }) => {
 //     return <primitive object={new THREE.AxesHelper(5)} ref={helperRef} />;
 // };
 
-const Scene = ({ scrollProgress, loaded, setLoaded }) => {
+const Scene = ({ scrollProgress, loaded, setLoaded, onProjectsContainerRef }) => {
 
     return (
         <>
             <Landing scrollProgress={scrollProgress} loaded={loaded} />
             <About scrollProgress={scrollProgress} />
-            <Projects scrollProgress={scrollProgress} />
+            <Projects scrollProgress={scrollProgress} onContainerRef={onProjectsContainerRef} />
             <Contact scrollProgress={scrollProgress} />
             <div className="container">
                 <div style={{
@@ -127,7 +120,7 @@ const Scene = ({ scrollProgress, loaded, setLoaded }) => {
                     pointerEvents: 'none',
                     zIndex: 1,
                 }} />
-                <Canvas camera={{ position: [-0.4, 0.3, 3.2], fov: 75 }} style={{ pointerEvents: 'none' }} events={(store) => ({ ...store.getState().events, enabled: false })}>
+                <Canvas camera={{ position: [-0.4, 0.3, 3.2], fov: 75 }} style={{ pointerEvents: 'none' }} events={() => ({ enabled: false, compute: () => {}, connect: () => {}, disconnect: () => {} })}>
                     <CameraController scrollProgress={scrollProgress} />
                     <ambientLight intensity={7} />
                     <Model scrollProgress={scrollProgress} onLoad={() => setLoaded(true)} />

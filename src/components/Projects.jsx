@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react';
-import { FiExternalLink } from 'react-icons/fi';
+import { FiExternalLink, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const projectData = [
   {
@@ -10,11 +10,25 @@ const projectData = [
     image: "imgs/SimplySkinScreenshot.png"
   },
   {
+    title: "PingPond",
+    description: "A macOS menu bar app that visualizes live system activity as an interactive pixel-art aquarium, featuring real-time process monitoring and Reynolds boids flocking simulation.",
+    technologies: ["Swift", "SwiftUI", "SpriteKit"],
+    link: "https://github.com/rudrap31/pingpond",
+    image: "imgs/pingpond.png"
+  },
+  {
     title: "Bookmarked — nwHacks 2026",
     description: "A BookTok app where you share TikTok videos to build your reading list. It extracts every book mentioned, finds real-time availability at nearby libraries, and recommends books based on your taste.",
     technologies: ["React Native", "Python", "Supabase", "Gemini API"],
     link: "https://devpost.com/software/bookmarked-7srimw",
     image: "imgs/bookmarked.png"
+  },
+  {
+    title: "Trendl",
+    description: "A daily web game where players identify Google Trends topics from historical search interest charts, deployed with a full-stack AWS setup and TTL-based caching for fast puzzle fetches.",
+    technologies: ["Next.js", "TypeScript", "Supabase", "Redis", "Docker", "AWS"],
+    link: null,
+    image: "imgs/trendl.png"
   },
   {
     title: "Sentiment Trading Bot",
@@ -25,42 +39,21 @@ const projectData = [
   }
 ];
 
-const Projects = ({ scrollProgress }) => {
-  const containerRef = useRef(null);
+const Projects = ({ scrollProgress, onContainerRef }) => {
+  const carouselRef = useRef(null);
   const opacity = Math.min(1, Math.max(0, (scrollProgress - 1.5) * (1/0.15))) *
                  Math.min(1, Math.max(0, (2.25 - scrollProgress) * (1/0.15)));
 
-  const touchStartRef = useRef(0);
-
-  // Stop wheel/touch events from bubbling when this section can scroll internally
-  const canTrapScroll = useCallback((scrollingDown) => {
-    const el = containerRef.current;
-    if (!el) return false;
-    const canScrollDown = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
-    const canScrollUp = el.scrollTop > 1;
-    return (scrollingDown && canScrollDown) || (!scrollingDown && canScrollUp);
+  const scrollCarousel = useCallback((direction) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const card = el.querySelector('.project-mini-card');
+    const amount = card ? card.getBoundingClientRect().width + 16 : el.clientWidth * 0.8;
+    el.scrollBy({ left: direction * amount, behavior: 'smooth' });
   }, []);
-
-  const handleWheel = useCallback((e) => {
-    if (canTrapScroll(e.deltaY > 0)) {
-      e.stopPropagation();
-    }
-  }, [canTrapScroll]);
-
-  const handleTouchStart = useCallback((e) => {
-    touchStartRef.current = e.touches[0].clientY;
-  }, []);
-
-  const handleTouchMove = useCallback((e) => {
-    const deltaY = touchStartRef.current - e.touches[0].clientY;
-    touchStartRef.current = e.touches[0].clientY;
-    if (canTrapScroll(deltaY > 0)) {
-      e.stopPropagation();
-    }
-  }, [canTrapScroll]);
 
   return (
-    <div className="projects-section" ref={containerRef} onWheel={handleWheel} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} style={{
+    <div className="projects-section" ref={onContainerRef} style={{
       opacity: opacity,
       pointerEvents: opacity > 0 ? "auto" : "none"
     }}>
@@ -106,26 +99,49 @@ const Projects = ({ scrollProgress }) => {
         {/* Projects */}
         <div className="section-block">
           <h2 className="section-label">Projects</h2>
-          <div className="projects-grid">
-            {projectData.map((project, index) => {
-              const cardContent = (
-                <>
-                  <div className="project-image-wrapper">
-                    <img src={project.image} alt={project.title} className="project-card-image" />
-                  </div>
-                  <div className="project-card-body">
-                    <div className="project-mini-header">
-                      <h4>{project.title}</h4>
-                      {project.link && <FiExternalLink size={15} />}
+          <div className="projects-carousel-wrapper">
+            <button
+              type="button"
+              className="carousel-arrow carousel-arrow-left"
+              onClick={() => scrollCarousel(-1)}
+              aria-label="Scroll projects left"
+            >
+              <FiChevronLeft size={20} />
+            </button>
+            <div className="projects-grid" ref={carouselRef}>
+              {projectData.map((project, index) => {
+                const cardContent = (
+                  <>
+                    <div className="project-image-wrapper">
+                      <img src={project.image} alt={project.title} className="project-card-image" />
                     </div>
-                    <p>{project.description}</p>
-                  </div>
-                </>
-              );
-              return project.link
-                ? <a href={project.link} key={index} className="project-mini-card" target="_blank" rel="noopener noreferrer">{cardContent}</a>
-                : <div key={index} className="project-mini-card">{cardContent}</div>;
-            })}
+                    <div className="project-card-body">
+                      <div className="project-mini-header">
+                        <h4>{project.title}</h4>
+                        {project.link && <FiExternalLink size={15} />}
+                      </div>
+                      <p>{project.description}</p>
+                      <div className="technologies">
+                        {project.technologies.map((t, i) => (
+                          <span key={i} className="tech-tag">{t}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                );
+                return project.link
+                  ? <a href={project.link} key={index} className="project-mini-card" target="_blank" rel="noopener noreferrer">{cardContent}</a>
+                  : <div key={index} className="project-mini-card">{cardContent}</div>;
+              })}
+            </div>
+            <button
+              type="button"
+              className="carousel-arrow carousel-arrow-right"
+              onClick={() => scrollCarousel(1)}
+              aria-label="Scroll projects right"
+            >
+              <FiChevronRight size={20} />
+            </button>
           </div>
         </div>
 

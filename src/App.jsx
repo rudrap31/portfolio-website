@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Scene from "./components/Scene";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Analytics } from '@vercel/analytics/react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
@@ -9,6 +9,12 @@ function App() {
 
     const [scrollProgress, setScrollProgress] = useState(0);
     const [loaded, setLoaded] = useState(false);
+    const scrollProgressRef = useRef(0);
+    const projectsElRef = useRef(null);
+
+    useEffect(() => {
+        scrollProgressRef.current = scrollProgress;
+    }, [scrollProgress]);
 
     useEffect(() => {
         const img = new Image();
@@ -56,7 +62,30 @@ function App() {
     useEffect(() => {
         document.body.style.overflow = "hidden"; // Disable page scrolling
 
+        // While the experience/projects section is active (visible) and still has room
+        // to scroll internally, wheel/touch input should scroll it instead of the
+        // background zoom. Only once it hits the top/bottom does zoom take back over.
+        const trapForProjects = (deltaY) => {
+            const el = projectsElRef.current;
+            if (!el) return false;
+            const progress = scrollProgressRef.current;
+            if (progress < 1.5 || progress > 2.25) return false;
+
+            const scrollingDown = deltaY > 0;
+            const canScrollDown = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
+            const canScrollUp = el.scrollTop > 1;
+            if ((scrollingDown && canScrollDown) || (!scrollingDown && canScrollUp)) {
+                el.scrollTop += deltaY;
+                return true;
+            }
+            return false;
+        };
+
         const handleWheel = (event) => {
+            if (trapForProjects(event.deltaY)) {
+                event.preventDefault();
+                return;
+            }
             setScrollProgress((prev) =>
                 Math.min(Math.max(0, prev + event.deltaY * 0.00125), 3) // Limit between 0 and 3
             );
@@ -69,6 +98,10 @@ function App() {
         const handleTouchMove = (event) => {
             const deltaY = touchStartY - event.touches[0].clientY;
             touchStartY = event.touches[0].clientY;
+            if (trapForProjects(deltaY)) {
+                event.preventDefault();
+                return;
+            }
             setScrollProgress((prev) =>
                 Math.min(Math.max(0, prev + deltaY * 0.003), 3)
             );
@@ -76,7 +109,7 @@ function App() {
 
         window.addEventListener("wheel", handleWheel);
         window.addEventListener("touchstart", handleTouchStart, { passive: true });
-        window.addEventListener("touchmove", handleTouchMove, { passive: true });
+        window.addEventListener("touchmove", handleTouchMove, { passive: false });
         return () => {
             window.removeEventListener("wheel", handleWheel);
             window.removeEventListener("touchstart", handleTouchStart);
@@ -88,7 +121,7 @@ function App() {
         <Router>
             <Analytics />
             <Navbar scrollProgress={scrollProgress} setScrollProgress={setScrollProgress} loaded={loaded}/>
-            <Scene scrollProgress={scrollProgress} loaded={loaded} setLoaded={setLoaded}/>
+            <Scene scrollProgress={scrollProgress} loaded={loaded} setLoaded={setLoaded} onProjectsContainerRef={(el) => { projectsElRef.current = el; }}/>
             {!loaded && <div className="loading-spinner" />}
             {loaded && scrollProgress < 0.1 && (
                 <div className="scroll-indicator">
