@@ -4,13 +4,14 @@ import Scene from "./components/Scene";
 import { useState, useEffect, useRef } from "react";
 import { Analytics } from '@vercel/analytics/react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { MAX_PROGRESS, activeStage } from './components/stages';
 
 function App() {
 
     const [scrollProgress, setScrollProgress] = useState(0);
     const [loaded, setLoaded] = useState(false);
     const scrollProgressRef = useRef(0);
-    const projectsElRef = useRef(null);
+    const sectionElsRef = useRef({});
 
     useEffect(() => {
         scrollProgressRef.current = scrollProgress;
@@ -62,14 +63,12 @@ function App() {
     useEffect(() => {
         document.body.style.overflow = "hidden"; // Disable page scrolling
 
-        // While the experience/projects section is active (visible) and still has room
-        // to scroll internally, wheel/touch input should scroll it instead of the
-        // background zoom. Only once it hits the top/bottom does zoom take back over.
-        const trapForProjects = (deltaY) => {
-            const el = projectsElRef.current;
+        // Sections are sized to fit one screen, but on short/narrow viewports they can
+        // overflow. While such a section is active and still has room to scroll
+        // internally, wheel/touch input scrolls it instead of the background zoom.
+        const trapForSection = (deltaY) => {
+            const el = sectionElsRef.current[activeStage(scrollProgressRef.current)];
             if (!el) return false;
-            const progress = scrollProgressRef.current;
-            if (progress < 1.5 || progress > 2.25) return false;
 
             const scrollingDown = deltaY > 0;
             const canScrollDown = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
@@ -82,12 +81,12 @@ function App() {
         };
 
         const handleWheel = (event) => {
-            if (trapForProjects(event.deltaY)) {
+            if (trapForSection(event.deltaY)) {
                 event.preventDefault();
                 return;
             }
             setScrollProgress((prev) =>
-                Math.min(Math.max(0, prev + event.deltaY * 0.00125), 3) // Limit between 0 and 3
+                Math.min(Math.max(0, prev + event.deltaY * 0.00125), MAX_PROGRESS)
             );
         };
 
@@ -98,12 +97,12 @@ function App() {
         const handleTouchMove = (event) => {
             const deltaY = touchStartY - event.touches[0].clientY;
             touchStartY = event.touches[0].clientY;
-            if (trapForProjects(deltaY)) {
+            if (trapForSection(deltaY)) {
                 event.preventDefault();
                 return;
             }
             setScrollProgress((prev) =>
-                Math.min(Math.max(0, prev + deltaY * 0.003), 3)
+                Math.min(Math.max(0, prev + deltaY * 0.003), MAX_PROGRESS)
             );
         };
 
@@ -121,7 +120,7 @@ function App() {
         <Router>
             <Analytics />
             <Navbar scrollProgress={scrollProgress} setScrollProgress={setScrollProgress} loaded={loaded}/>
-            <Scene scrollProgress={scrollProgress} loaded={loaded} setLoaded={setLoaded} onProjectsContainerRef={(el) => { projectsElRef.current = el; }}/>
+            <Scene scrollProgress={scrollProgress} loaded={loaded} setLoaded={setLoaded} onSectionRef={(name, el) => { sectionElsRef.current[name] = el; }}/>
             {!loaded && <div className="loading-spinner" />}
             {loaded && scrollProgress < 0.1 && (
                 <div className="scroll-indicator">

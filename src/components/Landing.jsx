@@ -11,7 +11,7 @@ const Typing = () => {
           1000, // Waits 1s
           'cs @ ubc',
           1000, // Waits 1s
-          'ai enthusiast',
+          'i wonder if someone is reading this',
           1000
           ]}
         speed={10}

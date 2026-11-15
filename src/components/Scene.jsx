@@ -4,7 +4,9 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import Landing from "./Landing";
 import About from "./About";
+import Experience from "./Experience";
 import Projects from "./Projects";
+import { cameraProgress } from "./stages";
 import Contact from "./Contact";
 
 const Model = ({ scrollProgress, onLoad }) => {
@@ -36,7 +38,7 @@ const Model = ({ scrollProgress, onLoad }) => {
         };
         const onMouseDown = (e) => {
             const tag = e.target.tagName.toLowerCase();
-            if (tag === 'a' || tag === 'button' || tag === 'input' || tag === 'textarea' || tag === 'label' || e.target.closest('nav, .about, .projects-section, .contact')) return;
+            if (tag === 'a' || tag === 'button' || tag === 'input' || tag === 'textarea' || tag === 'label' || e.target.closest('nav, .about, .stage-section, .contact')) return;
             dragRef.current.isDragging = true;
             dragRef.current.lastX = e.clientX;
             document.body.style.cursor = 'grabbing';
@@ -98,13 +100,15 @@ const CameraController = ({ scrollProgress }) => {
 //     return <primitive object={new THREE.AxesHelper(5)} ref={helperRef} />;
 // };
 
-const Scene = ({ scrollProgress, loaded, setLoaded, onProjectsContainerRef }) => {
+const Scene = ({ scrollProgress, loaded, setLoaded, onSectionRef }) => {
+    const camProgress = cameraProgress(scrollProgress);
 
     return (
         <>
             <Landing scrollProgress={scrollProgress} loaded={loaded} />
             <About scrollProgress={scrollProgress} />
-            <Projects scrollProgress={scrollProgress} onContainerRef={onProjectsContainerRef} />
+            <Experience scrollProgress={scrollProgress} onContainerRef={(el) => onSectionRef("experience", el)} />
+            <Projects scrollProgress={scrollProgress} onContainerRef={(el) => onSectionRef("projects", el)} />
             <Contact scrollProgress={scrollProgress} />
             <div className="container">
                 <div style={{
@@ -121,9 +125,9 @@ const Scene = ({ scrollProgress, loaded, setLoaded, onProjectsContainerRef }) =>
                     zIndex: 1,
                 }} />
                 <Canvas camera={{ position: [-0.4, 0.3, 3.2], fov: 75 }} style={{ pointerEvents: 'none' }} events={() => ({ enabled: false, compute: () => {}, connect: () => {}, disconnect: () => {} })}>
-                    <CameraController scrollProgress={scrollProgress} />
+                    <CameraController scrollProgress={camProgress} />
                     <ambientLight intensity={7} />
-                    <Model scrollProgress={scrollProgress} onLoad={() => setLoaded(true)} />
+                    <Model scrollProgress={camProgress} onLoad={() => setLoaded(true)} />
 
                 </Canvas>
             </div>

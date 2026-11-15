@@ -1,150 +1,123 @@
-import { useRef, useCallback } from 'react';
-import { FiExternalLink, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiExternalLink, FiGithub, FiArrowUpRight } from 'react-icons/fi';
+import { stageOpacity } from './stages';
 
-const projectData = [
+const featuredProjects = [
   {
     title: "SimplySkin",
-    description: "A mobile skincare app that uses AI to help users understand their skin and make better product choices. Live on the Apple App Store with a real and growing user base.",
+    badge: "100+ users",
+    description: "AI skincare app on the App Store. Face scans run through a Faster R-CNN + MediaPipe pipeline; barcode scans rate products.",
     technologies: ["React Native", "Expo", "Supabase", "Express.js"],
     link: "https://apps.apple.com/ca/app/simplyskin-ai-skincare/id6751350480",
-    image: "imgs/SimplySkinScreenshot.png"
-  },
-  {
-    title: "PingPond",
-    description: "A macOS menu bar app that visualizes live system activity as an interactive pixel-art aquarium, featuring real-time process monitoring and Reynolds boids flocking simulation.",
-    technologies: ["Swift", "SwiftUI", "SpriteKit"],
-    link: "https://github.com/rudrap31/pingpond",
-    image: "imgs/pingpond.png"
-  },
-  {
-    title: "Bookmarked — nwHacks 2026",
-    description: "A BookTok app where you share TikTok videos to build your reading list. It extracts every book mentioned, finds real-time availability at nearby libraries, and recommends books based on your taste.",
-    technologies: ["React Native", "Python", "Supabase", "Gemini API"],
-    link: "https://devpost.com/software/bookmarked-7srimw",
-    image: "imgs/bookmarked.png"
+    image: "imgs/SimplySkinScreenshot.png",
   },
   {
     title: "Trendl",
-    description: "A daily web game where players identify Google Trends topics from historical search interest charts, deployed with a full-stack AWS setup and TTL-based caching for fast puzzle fetches.",
-    technologies: ["Next.js", "TypeScript", "Supabase", "Redis", "Docker", "AWS"],
-    link: null,
-    image: "imgs/trendl.png"
+    badge: "Live · trendl.dev",
+    description: "Daily web game: guess the Google Trends topic from its search-interest chart. Redis caching cut puzzle-fetch latency 82%.",
+    technologies: ["Next.js", "TypeScript", "Redis", "Docker", "AWS"],
+    link: "https://trendl.dev",
+    image: "imgs/trendl.png",
   },
   {
-    title: "Sentiment Trading Bot",
-    description: "A bot that reads financial news headlines and makes automated trading decisions based on sentiment analysis, with a React dashboard for portfolio analytics.",
-    technologies: ["React", "Flask", "Python"],
-    link: "https://github.com/rudrap31/sentiment-trading",
-    image: "imgs/portfolio-screenshot.png"
-  }
+    title: "PingPond",
+    badge: "50+ downloads",
+    description: "macOS menu bar app that turns live system activity into a pixel-art aquarium with boids flocking at 30 FPS.",
+    technologies: ["Swift", "SwiftUI", "SpriteKit"],
+    link: "https://pingpond.vercel.app/",
+    image: "imgs/pingpond.png",
+  },
+  {
+    title: "Bookmarked",
+    badge: "nwHacks 2026",
+    description: "Share BookTok videos to build a reading list. Extracts every book mentioned and checks nearby library availability.",
+    technologies: ["React Native", "Python", "Supabase", "Gemini API"],
+    link: "https://devpost.com/software/bookmarked-7srimw",
+    image: "imgs/bookmarked.png",
+  },
 ];
 
-const Projects = ({ scrollProgress, onContainerRef }) => {
-  const carouselRef = useRef(null);
-  const opacity = Math.min(1, Math.max(0, (scrollProgress - 1.5) * (1/0.15))) *
-                 Math.min(1, Math.max(0, (2.25 - scrollProgress) * (1/0.15)));
+const earlierProjects = [
+  {
+    title: "Sentiment Trading Bot",
+    description: "Trades on news-headline sentiment, with a React dashboard for portfolio analytics.",
+    technologies: ["Python", "Flask", "React"],
+    link: "https://github.com/rudrap31/sentiment-trading",
+    image: "imgs/portfolio-screenshot.png",
+  },
+  {
+    title: "Real-Time Chat App",
+    description: "MERN + Socket.io chat with JWT auth, user search, and online presence.",
+    technologies: ["MongoDB", "Express.js", "React", "Socket.io"],
+    link: "https://github.com/rudrap31/chat-app",
+    image: "imgs/chat-screenshot.png",
+  },
+  {
+    title: "This Website",
+    description: "3D scroll-driven portfolio built with React Three Fiber.",
+    technologies: ["React", "Three.js"],
+    link: "https://github.com/rudrap31/portfolio-website",
+    image: "imgs/portfolio-website-screenshot.png",
+  },
+];
 
-  const scrollCarousel = useCallback((direction) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const card = el.querySelector('.project-mini-card');
-    const amount = card ? card.getBoundingClientRect().width + 16 : el.clientWidth * 0.8;
-    el.scrollBy({ left: direction * amount, behavior: 'smooth' });
-  }, []);
+const LinkIcon = ({ link }) =>
+  link.includes('github.com') ? <FiGithub size={14} /> : <FiExternalLink size={14} />;
+
+const Projects = ({ scrollProgress, onContainerRef }) => {
+  const opacity = stageOpacity(scrollProgress, 'projects');
 
   return (
-    <div className="projects-section" ref={onContainerRef} style={{
-      opacity: opacity,
+    <div className="stage-section" ref={onContainerRef} style={{
+      opacity,
       pointerEvents: opacity > 0 ? "auto" : "none"
     }}>
-      <div className="exp-projects-container">
-
-        {/* Experience */}
-        <div className="section-block">
-          <h2 className="section-label">Experience</h2>
-          <div className="experience-card">
-            <a href="https://www.linkedin.com/company/whyaitech/" target="_blank" rel="noopener noreferrer">
-              <img src="imgs/whyaitech_logo.jpeg" className="exp-logo" alt="yAI" />
-            </a>
-            <div className="exp-details">
-              <div className="exp-header">
-                <h3><a href="https://www.linkedin.com/company/whyaitech/" className="exp-company-link" target="_blank" rel="noopener noreferrer">Software Engineering Intern — <span className="exp-company-inline">yAI</span></a></h3>
-                <span className="exp-date">Oct 2025 – Present</span>
-              </div>
-              <p>Building full-stack features for an AI-powered financial due diligence platform, including analytics dashboards, RAG pipelines, document citations, workflows, chat interfaces, CI/CD pipelines, and 2,000+ automated tests.</p>
-              <div className="technologies">
-                {["TypeScript", "React", "FastAPI", "PostgreSQL", "Azure", "Playwright"].map((t, i) => (
-                  <span key={i} className="tech-tag">{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="experience-card">
-            <img src="imgs/motion_logo.png" className="exp-logo" alt="Motion UBC" />
-            <div className="exp-details">
-              <div className="exp-header">
-                <h3>Software Developer — <span className="exp-company-inline">Motion UBC</span></h3>
-                <span className="exp-date">Oct 2025 – Present</span>
-              </div>
-              <p>Member of a student-led initiative dedicated to providing pro-bono services to local nonprofits. Building a web and mobile platform for United We Can, a Vancouver nonprofit, streamlining driver scheduling and request tracking.</p>
-              <div className="technologies">
-                {["Next.js", "React Native", "PostgreSQL", "Supabase", "Firebase"].map((t, i) => (
-                  <span key={i} className="tech-tag">{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Projects */}
-        <div className="section-block">
+      <div className="stage-container">
+        <div className="section-label-row">
           <h2 className="section-label">Projects</h2>
-          <div className="projects-carousel-wrapper">
-            <button
-              type="button"
-              className="carousel-arrow carousel-arrow-left"
-              onClick={() => scrollCarousel(-1)}
-              aria-label="Scroll projects left"
-            >
-              <FiChevronLeft size={20} />
-            </button>
-            <div className="projects-grid" ref={carouselRef}>
-              {projectData.map((project, index) => {
-                const cardContent = (
-                  <>
-                    <div className="project-image-wrapper">
-                      <img src={project.image} alt={project.title} className="project-card-image" />
-                    </div>
-                    <div className="project-card-body">
-                      <div className="project-mini-header">
-                        <h4>{project.title}</h4>
-                        {project.link && <FiExternalLink size={15} />}
-                      </div>
-                      <p>{project.description}</p>
-                      <div className="technologies">
-                        {project.technologies.map((t, i) => (
-                          <span key={i} className="tech-tag">{t}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                );
-                return project.link
-                  ? <a href={project.link} key={index} className="project-mini-card" target="_blank" rel="noopener noreferrer">{cardContent}</a>
-                  : <div key={index} className="project-mini-card">{cardContent}</div>;
-              })}
-            </div>
-            <button
-              type="button"
-              className="carousel-arrow carousel-arrow-right"
-              onClick={() => scrollCarousel(1)}
-              aria-label="Scroll projects right"
-            >
-              <FiChevronRight size={20} />
-            </button>
-          </div>
+          <a href="https://github.com/rudrap31" className="section-more-link" target="_blank" rel="noopener noreferrer">
+            more on GitHub <FiArrowUpRight size={14} />
+          </a>
         </div>
 
+        <div className="featured-grid">
+          {featuredProjects.map((p) => (
+            <a href={p.link} key={p.title} className="project-card" target="_blank" rel="noopener noreferrer">
+              <div className="project-image-wrapper">
+                <img src={p.image} alt={p.title} className="project-card-image" />
+              </div>
+              <div className="project-card-body">
+                <div className="project-card-header">
+                  <h4>{p.title}</h4>
+                  <LinkIcon link={p.link} />
+                </div>
+                <span className="project-badge">{p.badge}</span>
+                <p>{p.description}</p>
+                <div className="technologies">
+                  {p.technologies.map((t) => <span key={t} className="tech-tag">{t}</span>)}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <h3 className="subsection-label">Earlier work</h3>
+        <div className="earlier-grid">
+          {earlierProjects.map((p) => (
+            <a href={p.link} key={p.title} className="earlier-card" target="_blank" rel="noopener noreferrer">
+              <img src={p.image} alt="" className="earlier-thumb" />
+              <div className="earlier-body">
+                <div className="project-card-header">
+                  <h4>{p.title}</h4>
+                  <LinkIcon link={p.link} />
+                </div>
+                <p>{p.description}</p>
+                <div className="technologies">
+                  {p.technologies.map((t) => <span key={t} className="tech-tag">{t}</span>)}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );

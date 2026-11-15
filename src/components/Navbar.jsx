@@ -1,5 +1,9 @@
+import { STAGES } from "./stages";
+
 const Navbar = ({ scrollProgress, setScrollProgress, loaded }) => {
     const handleAbout = (targetValue) => {
+        const sidebar = document.getElementById('sidebox_active');
+        if (sidebar) sidebar.checked = false; // close mobile menu
         const duration = 800;  // milliseconds
         const startValue = scrollProgress;
         const startTime = performance.now();
@@ -45,9 +49,11 @@ const Navbar = ({ scrollProgress, setScrollProgress, loaded }) => {
                 </label>
 
                 {/* Works both ways: Increases or decreases scrollProgress smoothly */}
-                <a href="#" onClick={() => handleAbout(0.9)}>about.</a>
-                <a href="#" onClick={() => handleAbout(1.8)}>experience.</a>
-                <a href="#" onClick={() => handleAbout(2.4)}>contact.</a>
+                <a href="#" onClick={() => handleAbout(STAGES.about.target)}>about.</a>
+                <a href="#" onClick={() => handleAbout(STAGES.experience.target)}>experience.</a>
+                <a href="#" onClick={() => handleAbout(STAGES.projects.target)}>projects.</a>
+                <a href="#" onClick={() => handleAbout(STAGES.contact.target)}>contact.</a>
+                <a href="/resume.pdf" className="resume-button" target="_blank" rel="noopener noreferrer">resume</a>
             </div>
         </nav>
     );

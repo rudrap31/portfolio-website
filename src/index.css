@@ -430,68 +430,125 @@ nav svg {
     }
 }
 
-/* Experience & Projects Section */
-.projects-section {
+/* Experience & Projects stops */
+.stage-section {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
+    height: 100dvh;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
     padding: 100px 2rem 2rem;
     box-sizing: border-box;
     color: white;
     overflow-y: auto;
+    /* fade content out before it scrolls under the navbar */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 64px, #000 84px);
+    mask-image: linear-gradient(to bottom, transparent 64px, #000 84px);
 }
 
-.exp-projects-container {
+.stage-container {
     width: 100%;
-    max-width: 1000px;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    max-width: 1100px;
+    /* centers vertically, but falls back to top-aligned when content overflows */
+    margin: auto;
 }
 
-.section-block {
-    display: flex;
-    flex-direction: column;
-}
-
+/* matches .about-title so every section heading is the same size */
 .section-label {
-    font-size: 1.1rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--purple);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
-.experience-card {
+.section-label-row {
     display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     gap: 1rem;
-    align-items: flex-start;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 1rem 1.15rem;
 }
 
-.experience-card + .experience-card {
-    margin-top: 0.75rem;
+.section-more-link {
+    display: inline-flex;
+    white-space: nowrap;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.section-more-link:hover {
+    color: white;
+}
+
+.subsection-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 1.25rem 0 0.6rem;
+}
+
+/* Experience */
+.stage-container--narrow {
+    max-width: 860px;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.timeline-item {
+    position: relative;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+}
+
+.timeline-marker {
+    flex-shrink: 0;
+    padding-top: 1rem;
+}
+
+/* rail from each logo down to the next one (marker padding + timeline gap) */
+.timeline-item:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 23px;
+    top: calc(1rem + 48px);
+    bottom: -2rem;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(166, 108, 255, 0.7), rgba(166, 108, 255, 0.25));
 }
 
 .exp-logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     object-fit: cover;
-    flex-shrink: 0;
-    margin-top: 2px;
+    box-shadow: 0 0 0 4px #000, 0 0 0 5px rgba(166, 108, 255, 0.45);
 }
 
-.exp-details {
+.experience-card {
     flex: 1;
     min-width: 0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.15rem 1.35rem;
+    transition: border-color 0.2s ease;
+}
+
+.experience-card:hover {
+    border-color: rgba(166, 108, 255, 0.35);
 }
 
 .exp-header {
@@ -499,36 +556,61 @@ nav svg {
     justify-content: space-between;
     align-items: baseline;
     gap: 0.75rem;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.5rem;
 }
 
 .exp-header h3 {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 600;
 }
 
 .exp-date {
-    font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
     white-space: nowrap;
     flex-shrink: 0;
 }
 
 .exp-company-inline {
-    color: var(--purple);
+    color: #a66cff;
     font-weight: 600;
-}
-
-.exp-company-link {
     text-decoration: none;
-    color: inherit;
 }
 
-.exp-details p {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
+a.exp-company-inline:hover {
+    text-decoration: underline;
+}
+
+.exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.7rem;
+}
+
+.exp-bullets li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.82rem;
     line-height: 1.5;
-    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.exp-bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0.15rem;
+    top: 0.6em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #a66cff;
+}
+
+.exp-bullets strong {
+    color: white;
+    font-weight: 600;
 }
 
 .technologies {
@@ -547,79 +629,38 @@ nav svg {
     font-weight: 500;
 }
 
-.projects-carousel-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+/* Projects */
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
 }
 
-.projects-grid {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    padding: 0.25rem 0.1rem 0.75rem;
-    flex: 1;
-    min-width: 0;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-}
-
-.projects-grid::-webkit-scrollbar {
-    height: 6px;
-}
-
-.projects-grid::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 3px;
-}
-
-.carousel-arrow {
-    flex-shrink: 0;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-
-.carousel-arrow:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-
-.project-mini-card {
+.project-card,
+.earlier-card {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
     overflow: hidden;
     text-decoration: none;
     color: white;
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 calc((100% - 2rem) / 3);
-    scroll-snap-align: start;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
-.project-mini-card:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.06);
+.project-card:hover,
+.earlier-card:hover {
+    border-color: rgba(166, 108, 255, 0.5);
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-2px);
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
 }
 
 .project-image-wrapper {
-    width: 100%;
-    height: 130px;
-    overflow: hidden;
+    height: 115px;
     padding: 8px 12px;
     box-sizing: border-box;
     display: flex;
@@ -631,73 +672,127 @@ nav svg {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    object-position: center;
     display: block;
 }
 
 .project-card-body {
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 0.9rem 0.85rem;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
     flex: 1;
 }
 
-.project-mini-header {
+.project-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
 }
 
-.project-mini-header h4 {
-    font-size: 0.9rem;
+.project-card-header h4 {
+    font-size: 0.92rem;
     font-weight: 600;
 }
 
-.project-mini-header svg {
-    color: rgba(255, 255, 255, 0.3);
+.project-card-header svg {
+    color: rgba(255, 255, 255, 0.35);
     flex-shrink: 0;
 }
 
-.project-mini-card p {
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.55);
+.project-badge {
+    align-self: flex-start;
+    font-size: 0.66rem;
+    font-weight: 600;
+    color: #c9a6ff;
+    background: rgba(166, 108, 255, 0.12);
+    border: 1px solid rgba(166, 108, 255, 0.35);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+}
+
+.project-card p,
+.earlier-card p {
+    font-size: 0.76rem;
+    color: rgba(255, 255, 255, 0.58);
     line-height: 1.5;
+}
+
+.project-card p {
     flex: 1;
 }
 
-@media (max-width: 900px) {
-    .project-mini-card {
-        flex-basis: calc((100% - 1rem) / 2);
+.earlier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+}
+
+.earlier-card {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.7rem;
+    align-items: flex-start;
+}
+
+.earlier-thumb {
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.earlier-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+}
+
+.earlier-body h4 {
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+    .featured-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .earlier-grid {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 768px) {
-    .projects-section {
-        padding: 90px 1rem 1.25rem;
-    }
-
-    .exp-projects-container {
-        gap: 1.5rem;
-    }
-
     .section-label {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .stage-section {
+        padding: 90px 1rem 1.5rem;
     }
 
     .experience-card {
-        padding: 0.85rem 1rem;
+        padding: 0.9rem 1rem;
+    }
+
+    .timeline-item {
         gap: 0.75rem;
     }
 
-    .experience-card + .experience-card {
-        margin-top: 0.6rem;
+    .timeline-item:not(:last-child)::before {
+        left: 17px;
+        top: calc(1rem + 36px);
     }
 
     .exp-logo {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
     }
 
     .exp-header {
@@ -706,68 +801,52 @@ nav svg {
     }
 
     .exp-header h3 {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
 
-    .exp-date {
-        font-size: 0.68rem;
-    }
-
-    .exp-details p {
-        font-size: 0.75rem;
-    }
-
-    .tech-tag {
-        font-size: 0.6rem;
-    }
-
-    .projects-grid {
-        gap: 0.75rem;
-    }
-
-    .project-mini-card {
-        flex-basis: 82%;
-    }
-
-    .carousel-arrow {
-        width: 28px;
-        height: 28px;
+    .exp-bullets li {
+        font-size: 0.76rem;
     }
 
     .project-image-wrapper {
-        height: 120px;
-    }
-
-    .project-card-body {
-        padding: 0.65rem 0.85rem;
-    }
-
-    .project-mini-header h4 {
-        font-size: 0.82rem;
-    }
-
-    .project-mini-card p {
-        font-size: 0.72rem;
+        height: 100px;
     }
 }
 
-@media (max-width: 480px) {
-    .projects-section {
-        padding: 85px 0.75rem 1rem;
+@media (max-width: 560px) {
+    .stage-section {
+        padding: 85px 0.75rem 1.25rem;
     }
 
-    .experience-card {
-        flex-direction: row;
-        gap: 0.65rem;
-    }
-
-    .exp-logo {
-        width: 28px;
-        height: 28px;
+    .featured-grid {
+        grid-template-columns: 1fr;
     }
 
     .section-label {
-        font-size: 0.9rem;
+        font-size: 1.4rem;
+    }
+}
+
+/* Resume button in navbar */
+nav a.resume-button {
+    height: auto;
+    margin-left: 12px;
+    padding: 6px 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+nav a.resume-button:hover {
+    background: white;
+    color: black;
+}
+
+@media (max-width: 560px) {
+    nav a.resume-button {
+        width: auto;
+        margin: 10px 30px;
+        padding: 8px 22px;
     }
 }
 
@@ -778,7 +857,7 @@ nav svg {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 88%;
-    max-width: 500px;
+    max-width: 560px;
     color: white;
     text-align: center;
 }
@@ -790,45 +869,148 @@ nav svg {
 .contact-content h2 {
     font-size: 2rem;
     color: var(--purple);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     font-weight: 700;
 }
 
 .contact-description {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 2rem;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.62);
+    max-width: 420px;
+    margin: 0 auto 2rem;
 }
 
-.contact-links {
+.contact-email {
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(86, 18, 149, 0.28), rgba(86, 18, 149, 0.08));
+    border: 1px solid rgba(166, 108, 255, 0.3);
+    box-shadow: 0 0 24px rgba(86, 18, 149, 0.18);
+    margin-bottom: 0.85rem;
+    text-align: left;
 }
 
-.contact-link-card {
+.contact-email-link {
+    flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 0.85rem;
+    padding: 0.5rem 0.6rem;
     color: white;
     text-decoration: none;
-    font-size: 0.95rem;
-    padding: 0.85rem 1.15rem;
+}
+
+.contact-email-icon {
+    width: 42px;
+    height: 42px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(166, 108, 255, 0.14);
+    color: #b98cff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.contact-email-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.contact-email-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.contact-email-address {
+    font-size: 1rem;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.contact-email-link:hover .contact-email-address {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.contact-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    padding: 0.55rem 0.9rem;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
     transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.contact-link-card:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+.contact-copy:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
-.contact-link-card svg {
-    font-size: 1.2rem;
-    color: var(--purple);
-    flex-shrink: 0;
+.contact-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.contact-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 1rem 0.5rem 0.9rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: white;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.contact-tile:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(166, 108, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.contact-tile-icon {
+    font-size: 1.25rem;
+    color: #9a5cf5;
+    display: flex;
+}
+
+.contact-tile-arrow {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.3);
+    transition: color 0.2s ease;
+}
+
+.contact-tile:hover .contact-tile-arrow {
+    color: white;
 }
 
 @media (max-width: 768px) {
@@ -837,7 +1019,7 @@ nav svg {
     }
 
     .contact-content {
-        padding: 1.5rem;
+        padding: 1.5rem 0.5rem;
     }
 
     .contact-content h2 {
@@ -848,28 +1030,29 @@ nav svg {
         font-size: 0.9rem;
         margin-bottom: 1.5rem;
     }
-
-    .contact-link-card {
-        font-size: 0.88rem;
-        padding: 0.75rem 1rem;
-    }
 }
 
 @media (max-width: 480px) {
-    .contact-content {
-        padding: 1.25rem;
-    }
-
     .contact-content h2 {
         font-size: 1.4rem;
     }
 
-    .contact-link-card {
-        font-size: 0.82rem;
-        padding: 0.7rem 0.9rem;
+    .contact-email-address {
+        font-size: 0.88rem;
     }
 
-    .contact-link-card svg {
-        font-size: 1rem;
+    .contact-email-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+    }
+
+    .contact-copy {
+        padding: 0.5rem 0.65rem;
+    }
+
+    .contact-tile {
+        font-size: 0.8rem;
+        padding: 0.85rem 0.25rem 0.75rem;
     }
 }

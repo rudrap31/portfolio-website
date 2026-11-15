@@ -1,9 +1,8 @@
-const About = ({ scrollProgress=scrollProgress }) => {
-    const opacity = Math.min(1, Math.max(0, (scrollProgress - 0.75) * (1/0.15))) * 
-                   Math.min(1, Math.max(0, (1.5 - scrollProgress) * (1/0.15)));
-                   // Fade in: 0.75 to 0.9 
-                   // Full opacity: 0.9 to 1.35
-                   // Fade out: 1.35 to 1.5
+import { stageOpacity } from './stages';
+
+const About = ({ scrollProgress }) => {
+    const opacity = stageOpacity(scrollProgress, 'about');
+
     return (
         <div className="about" style={{
             opacity: opacity,
@@ -16,10 +15,10 @@ const About = ({ scrollProgress=scrollProgress }) => {
                     <div className="about-text">
                         <div className="about-section">
                         <p>
-                            I’m a Computer Science student at UBC, previously interned at yAI, a financial due diligence AI startup, where I shipped full-stack features across the entire product.
+                            I’m a Computer Science student at UBC. I previously interned at yAI, a financial due diligence AI startup, where I shipped full-stack features across the entire product.
                         </p>
                         <p>
-                            I love building software that people actually use. From a skincare app live on the App Store to automated trading bots, I’m always working on something.
+                            I love building software that people actually use, from a skincare app on the App Store to a daily Google Trends guessing game and a macOS aquarium that visualizes your system activity. Right now I’m building infrastructure for UBC Esports.
                         </p>
                         </div>
 
@@ -27,7 +26,7 @@ const About = ({ scrollProgress=scrollProgress }) => {
                         <div className="skills-section">
                             <h3>Technical Skills</h3>
                             <div className="skills-container">
-                                {["TypeScript", "JavaScript", "Python", "Java", "C++", "React", "React Native", "Node.js", "FastAPI", "Flask", "PostgreSQL", "Supabase", "AWS", "Azure"].map((skill, index) => (
+                                {["TypeScript", "Python", "Java", "Swift", "Go", "C++", "SQL", "React", "Next.js", "React Native", "Node.js", "FastAPI", "PyTorch", "PostgreSQL", "Redis", "Docker", "AWS", "Azure"].map((skill, index) => (
                                     <span key={index} className="skill-tag">{skill}</span>
                                 ))}
                             </div>
